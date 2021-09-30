@@ -23,6 +23,13 @@ exports.handler = async(event) => {
             buid: body["buid"],
             url
         },
+        ConditionExpression: "#id <> :id",
+        ExpressionAttributeNames: {
+            "#id": "id"
+        },
+        ExpressionAttributeValues: {
+            ":id": id
+        }
     };
 
     try {
