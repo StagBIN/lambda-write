@@ -10,6 +10,7 @@ const tableName = "content";
 exports.handler = async(event) => {
     const body = JSON.parse(event['body']);
     var id = "";
+    var url = validator.isURL(body.data);
 
     !body["id"] ?
         id = nanoid() : id = body["id"];
@@ -19,7 +20,8 @@ exports.handler = async(event) => {
         Item: {
             id,
             data: body["data"],
-            buid: body["buid"]
+            buid: body["buid"],
+            url
         },
     };
 
