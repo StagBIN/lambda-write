@@ -7,7 +7,7 @@ const nanoid = customAlphabet('1234567890abcdefghijklmnopqrstuvwyz', 7)
 
 const tableName = "content";
 
-exports.handler = async (event) => {
+exports.handler = async(event) => {
     const body = JSON.parse(event['body']);
     var id = "";
 
@@ -23,7 +23,15 @@ exports.handler = async (event) => {
         },
     };
 
-    await documentClient.put(params).promise();
+    try {
+        await documentClient.put(params).promise();
+    }
+    catch (e) {
+        return {
+            statusCode: 400,
+            body: JSON.stringify({ error: e })
+        };
+    }
 
     const response = {
         statusCode: 200,
