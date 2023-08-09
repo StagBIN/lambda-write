@@ -11,6 +11,13 @@ exports.handler = async(event) => {
     const body = JSON.parse(event['body']);
     var id = "";
     var url = validator.isURL(body.data);
+    
+    if (!body.data) {
+        return {
+            statusCode: 400,
+            body: JSON.stringify({error: "Empty data"})
+        };
+    }
 
     !body["id"] ?
         id = nanoid() : id = body["id"];
@@ -21,6 +28,7 @@ exports.handler = async(event) => {
             id,
             data: body["data"],
             buid: body["buid"],
+            isEncrypted: body['isEncrypted'] || false,
             url
         },
         ConditionExpression: "#id <> :id",
